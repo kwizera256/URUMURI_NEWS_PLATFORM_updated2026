@@ -1,0 +1,17 @@
+# Global security rule: Disable directory indexing
+Options -Indexes
+
+# Main Routing configurations
+DirectoryIndex index.php index.html
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    
+    # Do not apply rewrite rules if the requested file or folder physically exists
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    
+    # Route all traffic to your main landing index file cleanly
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
